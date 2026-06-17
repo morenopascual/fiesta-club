@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuadrante de voluntarios — Fiesta del Club</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap');
+
+  :root {
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --text: #1A1A1A;
+    --muted: #6B6B6B;
+    --border: #E0DDD6;
+    --cantina: #C0392B;
+    --cantina-light: #FDEDEC;
+    --infantil: #2471A3;
+    --infantil-light: #EBF5FB;
+    --rugby: #1E8449;
+    --rugby-light: #EAFAF1;
+    --fotomaton: #7D3C98;
+    --fotomaton-light: #F5EEF8;
+    --caja: #D35400;
+    --caja-light: #FEF5EC;
+    --tienda: #148F77;
+    --tienda-light: #E8F8F5;
+    --coord-bg: #1A1A1A;
+    --vol-bg: #F0EFEA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text);
+    padding: 2rem 1rem 4rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  header p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .zone-card {
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .zone-header {
+    padding: 12px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .zone-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .zone-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .turno {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .turno:last-child { border-bottom: none; }
+
+  .turno-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .turno-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .turno-time {
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 20px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  .personas {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .persona {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+  }
+
+  .persona.coord {
+    background: var(--coord-bg);
+    color: #FFFFFF;
+    font-weight: 500;
+  }
+
+  .persona.vol {
+    background: var(--vol-bg);
+    color: var(--text);
+  }
+
+  .persona-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 1px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .persona.coord .persona-badge {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+
+  .persona.vol .persona-badge {
+    background: #D8D6CE;
+    color: #4A4A4A;
+  }
+
+  .cantina   .zone-icon { background: var(--cantina-light); color: var(--cantina); }
+  .cantina   .zone-name { color: var(--cantina); }
+  .infantil  .zone-icon { background: var(--infantil-light); color: var(--infantil); }
+  .infantil  .zone-name { color: var(--infantil); }
+  .rugby     .zone-icon { background: var(--rugby-light); color: var(--rugby); }
+  .rugby     .zone-name { color: var(--rugby); }
+  .fotomaton .zone-icon { background: var(--fotomaton-light); color: var(--fotomaton); }
+  .fotomaton .zone-name { color: var(--fotomaton); }
+  .caja      .zone-icon { background: var(--caja-light); color: var(--caja); }
+  .caja      .zone-name { color: var(--caja); }
+  .tienda    .zone-icon { background: var(--tienda-light); color: var(--tienda); }
+  .tienda    .zone-name { color: var(--tienda); }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 3px;
+  }
+  .legend-dot.coord { background: var(--coord-bg); }
+  .legend-dot.vol   { background: var(--vol-bg); border: 1px solid var(--border); }
+
+  footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Cuadrante de voluntarios</h1>
+  <p>Fiesta del Club &nbsp;·&nbsp; Coordinadores y voluntarios por zona</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot coord"></div> Coordinador/a</div>
+  <div class="legend-item"><div class="legend-dot vol"></div> Voluntario/a</div>
+</div>
+
+<div class="grid">
+
+  <!-- CANTINA -->
+  <div class="zone-card cantina">
+    <div class="zone-header">
+      <div class="zone-icon">🍺</div>
+      <div class="zone-name">Cantina</div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno 1</span>
+        <span class="turno-time">17:00 – 18:30</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Inés Hernández González-Villamil</div>
+        <div class="persona coord"><span class="persona-badge">Coord</span>Ana Belén Antón</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Raúl Zeid</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Silvia Salazar</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Marcos Plaza Mulas</div>
+      </div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno 2</span>
+        <span class="turno-time">18:30 – 20:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Rosana Santamaría</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Jonathan Horan</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Eduardo Rubio Ávila</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Carlos "Rolo" Rodríguez</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Javier Aspiroz</div>
+      </div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno 3</span>
+        <span class="turno-time">20:00 – 21:30</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Marcel Osborne</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Daniela Quintero</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Gonzalo Pérez de la Oliva (Mulder)</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Alejandro Mora Batalla</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Aubin Hernández</div>
+      </div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno 4</span>
+        <span class="turno-time">21:30 – 23:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Carlos García M-C (Calderín)</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Iñigo García-Ogara</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>María Romero Valenciano</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Ignacio Borrego Fernández</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Carlos Serrano Sanz</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ZONA INFANTIL -->
+  <div class="zone-card infantil">
+    <div class="zone-header">
+      <div class="zone-icon">🎈</div>
+      <div class="zone-name">Zona Infantil</div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno único</span>
+        <span class="turno-time">17:00 – 19:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Elisa García García</div>
+        <div class="persona coord"><span class="persona-badge">Coord</span>Cristina Baeza</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Juan Campos</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Alison Smith</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLOW RUGBY -->
+  <div class="zone-card rugby">
+    <div class="zone-header">
+      <div class="zone-icon">🏉</div>
+      <div class="zone-name">Torneo Slow Rugby</div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno único</span>
+        <span class="turno-time">18:30 – 20:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Gonzalo Soria</div>
+        <div class="persona coord"><span class="persona-badge">Coord</span>Eduardo Arroyo Herrero</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Gonzalo Durán Aricha</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOTOMATÓN -->
+  <div class="zone-card fotomaton">
+    <div class="zone-header">
+      <div class="zone-icon">📸</div>
+      <div class="zone-name">Fotomatón</div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno único</span>
+        <span class="turno-time">18:00 – 20:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Pilar Bixito</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Miguel Ángel Muñoz Martínez</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAJA -->
+  <div class="zone-card caja">
+    <div class="zone-header">
+      <div class="zone-icon">🧾</div>
+      <div class="zone-name">Caja</div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno 1</span>
+        <span class="turno-time">17:00 – 19:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Clara Romero</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Sofia Burgos</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Eva Sahis</div>
+      </div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno 2</span>
+        <span class="turno-time">19:00 – 21:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Mario Moreno Melero</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Raúl López Castro</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Ignacio Martínez Quintana</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIENDA -->
+  <div class="zone-card tienda">
+    <div class="zone-header">
+      <div class="zone-icon">👕</div>
+      <div class="zone-name">Tienda</div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno 1</span>
+        <span class="turno-time">17:00 – 19:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Carlos Molero</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Elena González Moral</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Laura del Riego Calderón</div>
+      </div>
+    </div>
+    <div class="turno">
+      <div class="turno-header">
+        <span class="turno-label">Turno 2</span>
+        <span class="turno-time">19:00 – 21:00</span>
+      </div>
+      <div class="personas">
+        <div class="persona coord"><span class="persona-badge">Coord</span>Jonathan Horan</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Mariano Menor</div>
+        <div class="persona vol"><span class="persona-badge">Vol</span>Antonio Guisado Molina</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Reserva: Luis Rodríguez Pulmo · César Belandia (disponible hasta 18:00)</footer>
+
+</body>
+</html>
